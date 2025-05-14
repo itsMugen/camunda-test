@@ -1,0 +1,7 @@
+.venv/
+kubectl*
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
