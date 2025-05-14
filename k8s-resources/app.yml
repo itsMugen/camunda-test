@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: camunda-app
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: camunda-app
+  template:
+    metadata:
+      labels:
+        app: camunda-app
+    spec:
+      containers:
+      - name: exporter
+        image: local.registry/camunda-app:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 2113
+        env:
+        - name: DOCKERHUB_ORGANIZATION
+          value: camunda
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: camunda-app
+  namespace: default
+spec:
+  selector:
+    app: camunda-app
+  ports:
+  - port: 2113
+    targetPort: 2113

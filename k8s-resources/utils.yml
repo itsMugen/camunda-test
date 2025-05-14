@@ -1,0 +1,28 @@
+# WARNING: You don't need to edit this file!
+
+---
+  # helper deployment for the testing framework to make curl calls into the pods without permanent port-forwarding
+  # alternative could have been https://github.com/segmentio/kubectl-curl, but we want to avoid having the candidates
+  # installing a plugin
+  
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: curl
+    namespace: default
+    labels:
+      app: curl
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: curl
+    template:
+      metadata:
+        labels:
+          app: curl
+      spec:
+        containers:
+        - name: curl
+          image: curlimages/curl:8.5.0
+          command: [ "/bin/sleep", "infinity"]
